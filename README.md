@@ -1,2 +1,2 @@
-hatoishi.github.com
+hatoishi.github.io
 ===================
