@@ -1,0 +1,9 @@
+title : hatoishi.net 鳩石
+
+future: false
+lsi: true
+safe: false
+url: http://hatoishi.net
+pygments: false
+markdown: kramdown
+permalink: /:categories/:year/:month/:day/:title
