@@ -78,6 +78,6 @@ sugar and caffeine but I never had to leave the museum. I hope this is typical
 of hackathons because I intend to do more.
 
 <figure>
-  <img src="/images/llamasquad.jpg" width="50%"/>
-	<figcaption>The Team</figcaption>
+<img src="/images/llamasquad.jpg" width="50%"/>
+<figcaption>The Team</figcaption>
 </figure>

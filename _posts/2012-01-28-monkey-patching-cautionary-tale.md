@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Monkey Patching: Cautionary Tale"
-description: "A tale of woe."
+description: "A tale of woe"
 modified: 2012-01-28
 category: articles
 tags : [ruby mongodb mongoid]
@@ -67,10 +67,8 @@ in the acceptance tests.
 
 The acceptance tests had started to complain that:
 
-    {% raw %}
     time appears to be frozen, Capybara does not work with libraries which freeze
     time, consider using time travelling instead
-    {% endraw %}
 
 Since I was using Timecop I started hunting through the test setup for unwanted
 or un-returned time freezes. I couldn't find any, and I was actually able to
@@ -78,15 +76,13 @@ remove Timecop entirely from the test and it still reported time frozen.
 Eventually I opened the Capybara gem and found that it detected frozen time with
 something like:
 
-<pre>
-<code class="ruby">
+~~~ ruby
 start_time = Time.now
 ...
 sleep(0.05)
 raise Capybara::FrozenInTime,
   "time appears to be frozen..." if Time.now == start_time
-</code>
-</pre>
+~~~
 
 My newly monkey patched clock was ticking seconds now and had fooled Capybara
 into thinking time had stopped.
@@ -95,21 +91,19 @@ into thinking time had stopped.
 
 My final solution is to only freeze time at whole second times:
 
-<pre>
-<code class="ruby">
+~~~ ruby
 Timecop.freeze(Time.at(Time.now.to_i))
-</code>
-</pre>
+~~~
 
 After that all time increments with Timecop are whole seconds and the Rspec
 equality matchers work with Time.now. An alternative would be to use the
 be_close Rspec matcher.
 
-### References
+### References 
 
-* [MongoDB docs](http://www.mongodb.org/display/DOCS/Dates)
-* Look at strip_milliseconds method in
-  [mongoid timekeeping.rb](https://github.com/mongoid/mongoid/blob/master/lib/mongoid/fields/internal/timekeeping.rb)
-* Look at wait_until method in
-  [capybara](https://github.com/jnicklas/capybara/blob/master/lib/capybara/node/base.rb)
+Check out the MongoDB docs on dates[^1] the strip_milliseconds method in mongoid
+time keeping[^2] and wait_until method in capybara[^3].
 
+[^1]: <http://www.mongodb.org/display/DOCS/Dates>
+[^2]: <https://github.com/mongoid/mongoid/blob/master/lib/mongoid/fields/internal/timekeeping.rb>
+[^3]: <https://github.com/jnicklas/capybara/blob/master/lib/capybara/node/base.rb>
