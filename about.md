@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /about/index.html
-title: About Hatoishi
+title: About
 tags: [personal]
 modified: 2013-09-30
 ---
