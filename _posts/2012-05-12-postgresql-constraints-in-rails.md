@@ -24,7 +24,7 @@ However if
   tools available
 
 then perhaps duplicating validation logic in ruby and in the database is a small
-  price to pay.
+price to pay.
 
 It is also true that table wide validations like uniqueness enforced at the
 application level can fail if two database connections write to the table at the
