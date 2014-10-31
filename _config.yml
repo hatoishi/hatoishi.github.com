@@ -40,7 +40,7 @@ links:
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Europe/London
 future:      false
-pygments:    true
+highlighter: pygments
 markdown:    redcarpet
 lsi:         true
 safe:        false
