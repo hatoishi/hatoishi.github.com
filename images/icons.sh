@@ -11,39 +11,23 @@ IMAGE_NAME="favicon"
 WEBSITE_DOMAIN="{{ site.url }}/images"
 
 ######################################
-# COLOURS
-
-GREY="\033[90m"
-GREEN="\033[32m"
-BLUE="\033[34m"
-CYAN="\033[36m"
-RED="\033[31m"
-NO_COLOUR="\033[0m"
-
-COLOUR_COMMENT=$GREY
-COLOUR_TAG=$BLUE
-COLOUR_ATTR_NAME=$CYAN
-COLOUR_ATTR_VALUE=$RED
-COLOUR_INTRO=$GREEN
-
-######################################
 # REQUIREMENTS
 
 if [ -z $CONVERT_CMD ] || [ ! -f $CONVERT_CMD ] || [ ! -x $CONVERT_CMD ];
 then
-  echo "ImageMagick needs to be installed to run this script"
+  echo "ImageMagick needs to be installed to run this script" 1>&2
   exit;
 fi
 
 if [ -z $SRC_IMAGE ];
 then
-  echo "You must supply a source image as the argument to this command."
+  echo "You must supply a source image as the argument to this command." 1>&2
   exit;
 fi
 
 if [ ! -f $SRC_IMAGE ];
 then
-  echo "Source image \"$SRC_IMAGE\" does not exist."
+  echo "Source image \"$SRC_IMAGE\" does not exist." 1>&2
   exit;
 fi
 
@@ -58,7 +42,7 @@ function generate_png {
 
   if [ ! -f $SOURCE ];
   then
-    echo "Could not find the source image $SOURCE"
+    echo "Could not find the source image $SOURCE" 1>&2
     exit 1;
   fi
 
@@ -71,30 +55,35 @@ function generate_png {
     HEIGHT=$SIZE
   fi
 
-  echo "$IMAGE_NAME-${SIZE}.png"
+  echo "$IMAGE_NAME-${SIZE}.png" 1>&2
   $CONVERT_CMD $SOURCE -resize ${WIDTH}x${HEIGHT}! -crop ${WIDTH}x${HEIGHT}+0+0 -alpha On $PWD/$IMAGE_NAME-${SIZE}.png
 }
 
-echo "Generating square base image"
+echo "Generating square base image" 1>&2
 # Converts the source image to 256 square, ignoring aspect ratio
 generate_png 256 $SRC_IMAGE
 
 ######################################
 # GENERATE THE VARIOUS SIZE VERSIONS
 
-echo "Generating required versions at different sizes"
+echo "Generating required versions at different sizes" 1>&2
 generate_png 16
 generate_png 32
 generate_png 48
 generate_png 57
+generate_png 60
 generate_png 64
 generate_png 70
 generate_png 72
+generate_png 76
 generate_png 114
 generate_png 120
 generate_png 144
 generate_png 150
 generate_png 152
+generate_png 180
+generate_png 192
+generate_png 196
 # TODO Figure out crop/resize priority etc.
 # generate_png 310x150
 generate_png 310
@@ -102,7 +91,7 @@ generate_png 310
 ######################################
 # GENERATE THE FAVICON.ICO FILE
 
-echo "Generating ico"
+echo "Generating ico" 1>&2
 $CONVERT_CMD \
 $PWD/$IMAGE_NAME-16.png \
 $PWD/$IMAGE_NAME-32.png \
@@ -113,43 +102,24 @@ $PWD/$IMAGE_NAME-64.png \
 ######################################
 # OUTPUT USEFUL MARKUP
 
-echo
-echo
-echo -e "${COLOUR_COMMENT}_______________________________________________________________________________________${NO_COLOUR}"
-echo
-echo -e "${COLOUR_INTRO}Add the following tags to the head of your document. Remove any you don't want.${NO_COLOUR}"
-echo -e "${COLOUR_INTRO}Compiled from https://github.com/audreyr/favicon-cheat-sheet${NO_COLOUR}"
-echo
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"icon\"${COLOUR_ATTR_NAME} sizes=${COLOUR_ATTR_VALUE}\"16x16 32x32 48x48 64x64\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon.ico\"${COLOUR_TAG}>${NO_COLOUR}"
-echo -e "${COLOUR_COMMENT}<!--[if IE]><link rel=\"shortcut icon\" href=\"${WEBSITE_DOMAIN}/favicon.ico\"><![endif]-->${NO_COLOUR}"
-echo
-echo -e "${COLOUR_COMMENT}<!-- The below are optional but encouraged -->${NO_COLOUR}"
-echo
-echo -e "${COLOUR_COMMENT}<!-- Touch icon for iOS 2.0+ and Android 2.1+: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"apple-touch-icon-precomposed\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-152.png\"${COLOUR_TAG}>${NO_COLOUR}"
-echo
-echo -e "${COLOUR_COMMENT}<!-- The below are optional -->${NO_COLOUR}"
-echo
-echo -e "${COLOUR_COMMENT}<!-- IE 10 Metro tile icon (Metro equivalent of apple-touch-icon): -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<meta${COLOUR_ATTR_NAME} name=${COLOUR_ATTR_VALUE}\"msapplication-TileColor\"${COLOUR_ATTR_NAME} content=${COLOUR_ATTR_VALUE}\"$TRANSPARENT_COLOUR\"${COLOUR_TAG}>${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<meta${COLOUR_ATTR_NAME} name=${COLOUR_ATTR_VALUE}\"msapplication-TileImage\"${COLOUR_ATTR_NAME} content=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-144.png\"${COLOUR_TAG}>${NO_COLOUR}"
+echo "<link rel=\"icon\" sizes=\"16x16 32x32 48x48 64x64\" href=\"${WEBSITE_DOMAIN}/favicon.ico\">"
+echo "<!--[if IE]><link rel=\"shortcut icon\" href=\"${WEBSITE_DOMAIN}/favicon.ico\"><![endif]-->"
 
-echo -e "${COLOUR_COMMENT}<!-- IE 11 live tiles: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<meta${COLOUR_ATTR_NAME} name=${COLOUR_ATTR_VALUE}\"msapplication-square70x70logo\"${COLOUR_ATTR_NAME} content=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-70.png\"${COLOUR_TAG} />${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<meta${COLOUR_ATTR_NAME} name=${COLOUR_ATTR_VALUE}\"msapplication-square150x150logo\"${COLOUR_ATTR_NAME} content=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-150.png\"${COLOUR_TAG} />${NO_COLOUR}"
-# echo -e "${COLOUR_TAG}<meta${COLOUR_ATTR_NAME} name=${COLOUR_ATTR_VALUE}\"msapplication-wide310x150logo\"${COLOUR_ATTR_NAME} content=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-310x150.png\"${COLOUR_TAG} />${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<meta${COLOUR_ATTR_NAME} name=${COLOUR_ATTR_VALUE}\"msapplication-square310x310logo\"${COLOUR_ATTR_NAME} content=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-310.png\"${COLOUR_TAG} />${NO_COLOUR}"
+echo "<meta name=\"msapplication-TileColor\" content=\"${TRANSPARENT_COLOUR}\">"
+echo "<meta name=\"msapplication-TileImage\" content=\"${WEBSITE_DOMAIN}/favicon-144.png\">"
 
-echo -e "${COLOUR_COMMENT}<!-- For iPad with high-resolution Retina display running iOS ≥ 7: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"apple-touch-icon-precomposed\"${COLOUR_ATTR_NAME} sizes=${COLOUR_ATTR_VALUE}\"152x152\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-152.png\"${COLOUR_TAG}>${NO_COLOUR}"
-echo -e "${COLOUR_COMMENT}<!-- For iPad with high-resolution Retina display running iOS ≤ 6: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"apple-touch-icon-precomposed\"${COLOUR_ATTR_NAME} sizes=${COLOUR_ATTR_VALUE}\"144x144\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-144.png\"${COLOUR_TAG}>${NO_COLOUR}"
-echo -e "${COLOUR_COMMENT}<!-- For iPhone with high-resolution Retina display running iOS ≥ 7: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"apple-touch-icon-precomposed\"${COLOUR_ATTR_NAME} sizes=${COLOUR_ATTR_VALUE}\"120x120\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-120.png\"${COLOUR_TAG}>${NO_COLOUR}"
-echo -e "${COLOUR_COMMENT}<!-- For iPhone with high-resolution Retina display running iOS ≤ 6: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"apple-touch-icon-precomposed\"${COLOUR_ATTR_NAME} sizes=${COLOUR_ATTR_VALUE}\"114x114\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-114.png\"${COLOUR_TAG}>${NO_COLOUR}"
-echo -e "${COLOUR_COMMENT}<!-- For first- and second-generation iPad: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"apple-touch-icon-precomposed\"${COLOUR_ATTR_NAME} sizes=${COLOUR_ATTR_VALUE}\"72x72\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-72.png\"${COLOUR_TAG}>${NO_COLOUR}"
-echo -e "${COLOUR_COMMENT}<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->${NO_COLOUR}"
-echo -e "${COLOUR_TAG}<link${COLOUR_ATTR_NAME} rel=${COLOUR_ATTR_VALUE}\"apple-touch-icon-precomposed\"${COLOUR_ATTR_NAME} href=${COLOUR_ATTR_VALUE}\"${WEBSITE_DOMAIN}/favicon-57.png\"${COLOUR_TAG}>${NO_COLOUR}"
-echo
+echo "<meta name=\"msapplication-square70x70logo\" content=\"${WEBSITE_DOMAIN}/favicon-70.png\">"
+echo "<meta name=\"msapplication-square150x150logo\" content=\"${WEBSITE_DOMAIN}/favicon-150.png\">"
+# echo "<meta name=\"msapplication-wide310x150logo\" content=\"${WEBSITE_DOMAIN}/favicon-310x150.png\">"
+echo "<meta name=\"msapplication-square310x310logo\" content=\"${WEBSITE_DOMAIN}/favicon-310.png\">"
+
+echo "<link rel=\"icon\" sizes=\"192x192\" href=\"${WEBSITE_DOMAIN}/favicon-192.png\">"
+
+echo "<link rel=\"apple-touch-icon-precomposed\" sizes=\"180x180\" href=\"${WEBSITE_DOMAIN}/favicon-180.png\">"
+echo "<link rel=\"apple-touch-icon-precomposed\" sizes=\"152x152\" href=\"${WEBSITE_DOMAIN}/favicon-152.png\">"
+echo "<link rel=\"apple-touch-icon-precomposed\" sizes=\"144x144\" href=\"${WEBSITE_DOMAIN}/favicon-144.png\">"
+echo "<link rel=\"apple-touch-icon-precomposed\" sizes=\"120x120\" href=\"${WEBSITE_DOMAIN}/favicon-120.png\">"
+echo "<link rel=\"apple-touch-icon-precomposed\" sizes=\"114x114\" href=\"${WEBSITE_DOMAIN}/favicon-114.png\">"
+echo "<link rel=\"apple-touch-icon-precomposed\" sizes=\"76x76\" href=\"${WEBSITE_DOMAIN}/favicon-76.png\">"
+echo "<link rel=\"apple-touch-icon-precomposed\" sizes=\"72x72\" href=\"${WEBSITE_DOMAIN}/favicon-72.png\">"
+echo "<link rel=\"apple-touch-icon-precomposed\" href=\"${WEBSITE_DOMAIN}/favicon-57.png\">"
