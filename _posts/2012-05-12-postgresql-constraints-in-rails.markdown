@@ -64,9 +64,9 @@ duplicated as simple foreign key constraints. (link)
 One thing you definitely need to do is configure Rails to generate the schema in
 sql format by adding
 
-~~~ ruby
+```ruby
 config.active_record.schema_format = :sql
-~~~
+```
 
 to your application's application.rb file. This actually replaces the Rails
 migration DSL usually found in schema.rb with the database's own structure dump
@@ -77,7 +77,7 @@ utility.
 Starting with a simple example where we have users who can have many
 projects.
 
-~~~ ruby
+```ruby
 class Project < ActiveRecord::Base
   belongs_to :user
 end
@@ -85,13 +85,13 @@ end
 class User < ActiveRecord::Base
   has_many :projects
 end
-~~~
+```
 
 In this example the migration for the users table is not important. The
 migration for the projects table will contain all of the constraints. We start
 with the base unconstrained migration
 
-~~~ ruby
+```ruby
 class CreateProjects < ActiveRecord::Migration
   def change
     create_table :projects do |t|
@@ -101,7 +101,7 @@ class CreateProjects < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 But the resulting table is not entirely without constraints. This migration will
 create a table with an additional integer column named id. This id column is the
@@ -123,7 +123,7 @@ which without any constraints can contain null, negative or zero values.
 
 We can add our desired model constraints to our ActiveRecord models.
 
-~~~ ruby
+```ruby
 class Project < ActiveRecord::Base
   belongs_to :user
   validates :name, :uniqueness => { :case_sensitve => false },
@@ -135,7 +135,7 @@ end
 class User < ActiveRecord::Base
   has_many :projects, :dependent => :destroy
 end
-~~~
+```
 
 We are specifying that a project must have a user_id, a case insensitve non null
 unique name and state must be in either an be 'active' or 'deleted'.  On
@@ -147,7 +147,7 @@ destruction of a user to the dependent projects.
 
 Rails migrations do offer some basic cross database column constraints.
 
-~~~ ruby
+```ruby
 class CreateProjects < ActiveRecord::Migration
   def change
     create_table :projects do |t|
@@ -157,7 +157,7 @@ class CreateProjects < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 After this migration the database will prevent the user_id and the name column
 in the projects table from containing null. Of course this is not a complete
@@ -201,13 +201,13 @@ Database indexes are not really constraints, their only purpose is to speed up
 queries and joins. The ActiveRecord database drivers offer a database agnostic
 way of added and removing indexes from tables.
 
-~~~ ruby
+```ruby
 class AddProjectConstraints < ActiveRecord::Migration
   def change
     add_index(:projects, :user_id)
   end
 end
-~~~
+```
 
 The add_index method will also accept arrays of columns (for multi column
 indexes), a unique switch (see later) and lengths for string indexes.
@@ -216,7 +216,7 @@ If any of the PostgreSQL index features are required it is possible to issue raw
 commands in the migration using the execute method. The equivalent to the
 above migration is
 
-~~~ ruby
+```ruby
 class AddProjectConstraints < ActiveRecord::Migration
   def up
     execute 'create index user_id_idx on projects (user_id)'
@@ -226,7 +226,7 @@ class AddProjectConstraints < ActiveRecord::Migration
     execute 'drop index user_id_idx'
   end
 end
-~~~
+```
 
 This will create a non-unique btree index on the user_id column. For more
 information on the different kinds of index see the PostgreSQL
@@ -241,7 +241,7 @@ Arguably the most useful constraint that rails intentionally neglects are
 foreign keys. These enforce the relations between the tables, the associations
 between the models. The equivalent of the presence of user validation is
 
-~~~ ruby
+```ruby
 class AddProjectConstraints < ActiveRecord::Migration
   def up
     execute 'alter table projects add constraint fk_user '\
@@ -252,7 +252,7 @@ class AddProjectConstraints < ActiveRecord::Migration
     execute 'alter table projects drop constraint fk_user'
   end
 end
-~~~
+```
 
 When trying to Project.new.save! a project with a non existent user id
 
@@ -271,10 +271,10 @@ When trying to delete a user which is referred to by a project
 This is the default on delete behaviour, if we wanted to cascade deletes we
 could change the constraint to
 
-~~~ sql
+```sql
 alter table projects add constraint fk_league
 foreign key (user_id) references users(id) on delete cascade
-~~~
+```
 
 then deleting the user deletes the projects. This is the equivalent of the
 has_many dependent destroy configuration in the User model shown previously.
@@ -285,10 +285,10 @@ If we wanted user deletion to orphan the projects we would need to remove the
 :null => false from the original project migration to allow the user_id to
 be null and then with the migration
 
-~~~ sql
+```sql
 alter table projects add constraint fk_league
   foreign key (user_id) references users(id) on delete set null
-~~~
+```
 
 As well as set null and the default no action there are other options
 set default that sets the user_id to the default and restrict. The default
@@ -307,7 +307,7 @@ table.
 
 Uniqueness can be added to a column with
 
-~~~ ruby
+```ruby
 class AddProjectConstraints < ActiveRecord::Migration
   def up
     execute 'alter table projects add constraint unique_name unique(name)'
@@ -317,7 +317,7 @@ class AddProjectConstraints < ActiveRecord::Migration
     execute 'alter table projects drop constraint unique_name'
   end
 end
-~~~
+```
 
 This explicitly declares a column as unique and PostgreSQL will implement this
 as it sees fit. This is implemented by automatically adding a unique index to
@@ -335,9 +335,9 @@ uniqueness. When I tried to add an expression to the add constraint command it
 resulted in a syntax error, so I resorted to adding a unique index manually
 with
 
-~~~ sql
+```sql
 create unique index name_idx on projects (lower(name))
-~~~
+```
 
 This index is now visible in pgadmin alongside the foreign key index, and trying
 to create a duplicate named record now results in the almost identical
@@ -349,9 +349,9 @@ to create a duplicate named record now results in the almost identical
 Note: as an added bonus the unique index with the lower cased column value will
 reduce the times of queries such as
 
-~~~ sql
+```sql
 select * from projects where lower(name) = 'project 1'
-~~~
+```
 
 If adding the unique constraint is implemented by creating a unique index then I
 would hope this index is also used for speeding up queries as well.
@@ -361,7 +361,7 @@ would hope this index is also used for speeding up queries as well.
 The equivalent of the state validation in the project model, and many other
 simple single object validations, can be achieved by a check constraint.
 
-~~~ ruby
+```ruby
 class AddProjectConstraints < ActiveRecord::Migration
   def up
     execute "alter table projects add constraint check_state \
@@ -372,7 +372,7 @@ class AddProjectConstraints < ActiveRecord::Migration
     execute 'alter table projects drop constraint check_state'
   end
 end
-~~~
+```
 
 Trying to violate this constraint results in
 

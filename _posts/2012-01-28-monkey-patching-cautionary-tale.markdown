@@ -31,11 +31,11 @@ standard that MongoDB uses.
 To confirm this I fired up a Rails console and issued the follow command several
 times:
 
-~~~ ruby
+```ruby
 BSON.deserialize(
   BSON.serialize(id:Time.now.tap { |t| puts t.to_f })
 ).fetch('id').to_f
-~~~
+```
 
 The results confirmed that BSON was truncating to milliseconds. So even if
 Mongoid wasn't truncating to the nearest second my tests would still have failed
@@ -76,13 +76,13 @@ remove Timecop entirely from the test and it still reported time frozen.
 Eventually I opened the Capybara gem and found that it detected frozen time with
 something like:
 
-~~~ ruby
+```ruby
 start_time = Time.now
 ...
 sleep(0.05)
 raise Capybara::FrozenInTime,
   "time appears to be frozen..." if Time.now == start_time
-~~~
+```
 
 My newly monkey patched clock was ticking seconds now and had fooled Capybara
 into thinking time had stopped.
@@ -91,9 +91,9 @@ into thinking time had stopped.
 
 My final solution is to only freeze time at whole second times:
 
-~~~ ruby
+```ruby
 Timecop.freeze(Time.at(Time.now.to_i))
-~~~
+```
 
 After that all time increments with Timecop are whole seconds and the Rspec
 equality matchers work with Time.now. An alternative would be to use the

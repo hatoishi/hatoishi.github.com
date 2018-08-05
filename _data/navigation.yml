@@ -1,0 +1,14 @@
+- title: Home
+  url: /
+- title: About
+  url: /about
+- title: <i class="fas fa-rss"></i> Feed
+  url: atom.xml
+# - title: Posts
+#   url: /posts/
+# - title: Categories
+#   url: /categories/
+# - title: Tags
+#   url: /tags/
+# - title: Search
+#   url: /search/

@@ -46,7 +46,7 @@ document the setup.
 The following playbook excerpt creates a user called wiki and copies a local
 authorized_keys file to its ssh directory.
 
-~~~ yaml
+```yaml
 - name: create user
   user: name=wiki shell=/bin/bash
 
@@ -69,7 +69,7 @@ authorized_keys file to its ssh directory.
     owner: wiki
     group: wiki
     mode: 0644
-~~~
+```
 
 ### Install Gollum
 
@@ -77,7 +77,7 @@ The server already has an up to date Ruby installed system wide. I use Bundler
 (the Ruby tool for managing Gem dependencies) to install the Gems. So I copy a
 Gemfile to the server and bundle into the wiki users home directory.
 
-~~~ yaml
+```yaml
 - name: gollum deps
   apt: name=libicu-dev
 
@@ -97,7 +97,7 @@ Gemfile to the server and bundle into the wiki users home directory.
   sudo: yes
   sudo_user: wiki
   command: bundle update gollum chdir=~
-~~~
+```
 
 ### Clone the repo
 
@@ -109,7 +109,7 @@ that will git reset --hard the repo after any push. This is dangerous and could
 result in losing changes if one forgets to pull this branch before pushing to
 it.
 
-~~~ yaml
+```yaml
 - name: repo
   sudo: yes
   sudo_user: wiki
@@ -126,25 +126,25 @@ it.
   sudo: yes
   sudo_user: wiki
   copy: src=post-receive dest=~/repo/.git/hooks/post-receive owner=wiki group=wiki mode=0755
-~~~
+```
 
-~~~ bash
+```bash
 #!/bin/sh
 git reset --hard
 echo "Changes pushed to the repo, I hope you pulled first!"
-~~~
+```
 
 ### Start Gollum
 
 So now Gollum is installed and the repo is cloned we can start up Gollum. I use
 a little restart script.
 
-~~~ bash
+```bash
 #!/usr/bin/env bash
 cd $HOME
 pkill -u wiki -f ruby.\*bin/gollum
 bundle exec gollum repo >~/gollum.log 2>&1 &
-~~~
+```
 
 ### Nginx
 
@@ -156,7 +156,7 @@ to a subdomain I have and I also use Nginx to enforce authentication.
 For maximum security I decided to take this opportunity to learn about client
 side SSL authentication.
 
-~~~ yaml
+```yaml
 - name: vhost
   copy:
     src: wiki
@@ -187,9 +187,9 @@ side SSL authentication.
 
 - name: restart nginx
   command: service nginx reload
-~~~
+```
 
-~~~ nginx
+```nginx
 # /etc/nginx/sites-available/wiki
 server {
   listen 443;
@@ -218,7 +218,7 @@ server {
   server_name example.com;
   rewrite ^ https://example.com? permanent;
 }
-~~~
+```
 
 ### SSL
 
@@ -257,70 +257,70 @@ client and the CA they both trust.
 
 1. Create a private key for the CA
 
-    ~~~ bash
+    ```bash
     openssl genrsa -des3 -out ca.key 4096
-    ~~~
+    ```
 
 2. Create a CA certificate for signing both server and client certificate. This
    command will ask for identity information.
 
-    ~~~ bash
+    ```bash
     openssl req -new -x509 -days 365 -key ca.key -out ca.crt
-    ~~~
+    ```
 
 3. Create a private key for the server
 
-    ~~~ bash
+    ```bash
     openssl genrsa -des3 -out server.key 4096
-    ~~~
+    ```
 
 4. Create a certificate signing request for the server. This command will ask
    for identity information. The CSR is the file given to the CA for
    certification.
 
-    ~~~ bash
+    ```bash
     openssl req -new -key server.key -out server.csr
-    ~~~
+    ```
 
 5. Have the CA endorse the CSR and create a certificate for the server.
 
-    ~~~ bash
+    ```bash
     openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
-    ~~~
+    ```
 
 6. Now create a private key for the client.
 
-    ~~~ bash
+    ```bash
     openssl genrsa -des3 -out client.key 4096
-    ~~~
+    ```
 
 7. Create a CSR for the client.
 
-    ~~~ bash
+    ```bash
     openssl req -new -key client.key -out client.csr
-    ~~~
+    ```
 
 8. Have the CA endorse the CSR and create a certificate for the client. I had to
    use a different serial from the server certificate otherwise the PKCS 12 file
    wouldn't import into Firefox.
 
-    ~~~ bash
+    ```bash
     openssl x509 -req -days 365 -in client.csr -CA ca.crt -CAkey ca.key -set_serial 02 -out client.crt
-    ~~~
+    ```
 
 9. Create a PKCS 12 file from the client private key and client certificate to
    import into Firefox to access the wiki.
 
-    ~~~ bash
+    ```bash
     openssl pkcs12 -export -in client.crt -inkey client.key -out client.p12
-    ~~~
+    ```
 
 10. Finally remove the passphrase from the server private key so Nginx can
     restart unatteneded.
 
-    ~~~ bash
+    ```bash
     cp server.key{,.org} && openssl rsa -in server.key.org -out server.key
-    ~~~~
+    ```
 
 Steps 6-9 can be used to create any number of client certificates for multiple
 users. It should also be noted that it is good practice, to add passphrases to

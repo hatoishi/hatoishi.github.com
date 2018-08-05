@@ -1,0 +1,10 @@
+version: '3'
+services:
+  hatoishi_app:
+    build: .
+    container_name: hatoishi_app
+    command: bash -c "(bundle check || bundle install) && bundle exec jekyll serve --host 0.0.0.0"
+    volumes:
+      - .:/src
+    ports:
+      - 4000:4000

@@ -1,81 +1,104 @@
-title :           Hatoishi 鳩石
-description:      Programming and more
-logo:             site-logo.png
-disqus_shortname:
-search:           false
-#Comment out url when working locally to resolve base urls correctly
-# url:              http://hatoishi.net
+title: Hatoishi 鳩石
+logo: /images/site-logo.png
+locale: en-GB
+email: jon@doveston.me.uk
+description: Programming and more
+baseurl: "/"
+url: "https://hatoishi.net"
+date_format: "%B %-d, %Y"
+read_time: true
+words_per_minute: 200
+mathjax: true
+google_analytics: UA-28013846-2
+disqus:
+  shortname: # Disqus shortname, e.g. "my_disqus_shortname"
+twitter:
+  username: hatoishi
+twitter_username: hatoishi
+github_username:  hatoishi
 
-# Owner/author information
-owner:
-  name:           Jon Doveston
-  # avatar:         bio-photo.jpg
-  email:          jon@doveston.me.uk
-  # Social networking links used in footer. Update and remove as you like.
-  twitter:        hatoishi
-  facebook:
-  github:         hatoishi
-  stackexchange:
-  linkedin:
-  instagram:
-  flickr:
-  tumblr:
-  # For Google Authorship https://plus.google.com/authorship
-  google_plus:
-  keybase: hatoishi
+google_fonts:
+  - name: "Source Sans Pro"
+    weights: "400,400i,700,700i"
+  - name: "Lora"
+    weights: "400,400i,700,700i"
 
-# Analytics and webmaster tools stuff goes here
-google_analytics:
-google_verify:
-# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:
+# Build settings
+markdown: kramdown
+remote_theme: "mmistakes/so-simple-theme"
+feed:
+  path: atom.xml
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
 
-# Links to include in top navigation
-# For external links add external: true
-links:
-  - title: About
-    url: /about
-  - title: Articles
-    url: /articles
+# Pagination - https://jekyllrb.com/docs/pagination/
+paginate: 10
+paginate_path: /page:num/
 
-# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    Europe/London
-future:      false
-highlighter: pygments
-markdown:    redcarpet
-lsi:         true
-safe:        false
+# Search
+search_full_content: false
 
-# https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:   /:categories/:title
+# Taxonomy pages
+# category_archive_path: "/categories/#"
+# tag_archive_path: "/tags/#"
 
-kramdown:
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  use_coderay: false
+# Collections
+collections:
+  recipes:
+    output: true
+    permalink: /:collection/:path/
 
-  coderay:
-    coderay_line_numbers:
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 4
-    coderay_bold_every: 10
-    coderay_css: class
+# Front Matter Defaults
+defaults:
+  # Post defaults
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+      comments: false
+      share: false
 
-include: [".htaccess"]
-exclude:
-  - "lib"
-  - "config.rb"
-  - "Capfile"
-  - "config"
-  - "log"
-  - "Rakefile"
-  - "Rakefile.rb"
-  - "tmp"
-  - "less"
-  - "test"
-  - "spec"
-  - "Gruntfile.js"
-  - "package.json"
-  - "node_modules"
+# Site Author
+author: false
+  # name: Jon Doveston
+  # picture: /images/jondoveston.png
+  # email: jon@doveston.me.uk
+  # twitter: hatoishi
+  # links:
+  #   - title: Twitter
+  #     url: https://twitter.com/hatoishi
+  #     icon: fab fa-twitter-square
+  #   - title: GitHub
+  #     url: https://github.com/hatoishi
+  #     icon: fab fa-github-square
+  #   - title: Keybase
+  #     url: https://keybase.io/hatoishi
+  #     icon: fab fa-keybase
+
+# Footer Links
+footer_links:
+  - title: Twitter
+    url: https://twitter.com/hatoishi
+    icon: fab fa-twitter
+  - title: GitHub
+    url: https://github.com/hatoishi
+    icon: fab fa-github
+  - title: Keybase
+    url: https://keybase.io/hatoishi
+    icon: fab fa-keybase
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/

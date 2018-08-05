@@ -1,15 +1,15 @@
 ---
 layout: page
-permalink: /about/index.html
+permalink: /about
 title: About
-tags: [personal]
-modified: 2013-09-30
+tags: personal
 ---
 
-Hi, my name is Jon Doveston.
+Hi, my name is Jon.
 
-I am a ruby developer living in the North of England. The little spare time I
-have I spend bringing up my children and practicing martial arts.
+I am a software engineer living in the North of England.
+
+The little spare time I have I spend bringing up my children and practicing martial arts.
 
 #### GPG Key
 
