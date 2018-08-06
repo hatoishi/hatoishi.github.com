@@ -1,0 +1,54 @@
+==================================================================
+https://keybase.io/hatoishi
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://hatoishi.net
+  * I am hatoishi (https://keybase.io/hatoishi) on keybase.
+  * I have a public key ASAzDU_hxroaLbYVzzHQQGChtVsCSEjexW9hb_w82SK66Qo
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "01017582b92a21b3723ffb123bb324b0b26dc0b8dd72384b30c8bed0d2fed39a6eb00a",
+            "host": "keybase.io",
+            "kid": "0120330d4fe1c6ba1a2db615cf31d04060a1b55b024848dec56f616ffc3cd922bae90a",
+            "uid": "1a20e14c006a063da6bf8bc452bf0719",
+            "username": "hatoishi"
+        },
+        "service": {
+            "hostname": "hatoishi.net",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.18"
+    },
+    "ctime": 1479980984,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1479980839,
+        "hash": "2ccbfd0153900e824e7b7b2e97bb419972c46cbe184005587ac232ad92be98b6c329a06c4177a2560335782543469316a37a9edc5f09cfc57a598cc0858b5811",
+        "seqno": 732868
+    },
+    "prev": "5999624de625216a3cee31302a76220e4f9bd206fde955c5001911fd28ab4043",
+    "seqno": 10,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgMw1P4ca6Gi22Fc8x0EBgobVbAkhI3sVvYW/8PNkiuukKp3BheWxvYWTFAvR7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTAxNzU4MmI5MmEyMWIzNzIzZmZiMTIzYmIzMjRiMGIyNmRjMGI4ZGQ3MjM4NGIzMGM4YmVkMGQyZmVkMzlhNmViMDBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwMzMwZDRmZTFjNmJhMWEyZGI2MTVjZjMxZDA0MDYwYTFiNTViMDI0ODQ4ZGVjNTZmNjE2ZmZjM2NkOTIyYmFlOTBhIiwidWlkIjoiMWEyMGUxNGMwMDZhMDYzZGE2YmY4YmM0NTJiZjA3MTkiLCJ1c2VybmFtZSI6ImhhdG9pc2hpIn0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJoYXRvaXNoaS5uZXQiLCJwcm90b2NvbCI6Imh0dHA6In0sInR5cGUiOiJ3ZWJfc2VydmljZV9iaW5kaW5nIiwidmVyc2lvbiI6MX0sImNsaWVudCI6eyJuYW1lIjoia2V5YmFzZS5pbyBnbyBjbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjE4In0sImN0aW1lIjoxNDc5OTgwOTg0LCJleHBpcmVfaW4iOjUwNDU3NjAwMCwibWVya2xlX3Jvb3QiOnsiY3RpbWUiOjE0Nzk5ODA4MzksImhhc2giOiIyY2NiZmQwMTUzOTAwZTgyNGU3YjdiMmU5N2JiNDE5OTcyYzQ2Y2JlMTg0MDA1NTg3YWMyMzJhZDkyYmU5OGI2YzMyOWEwNmM0MTc3YTI1NjAzMzU3ODI1NDM0NjkzMTZhMzdhOWVkYzVmMDljZmM1N2E1OThjYzA4NThiNTgxMSIsInNlcW5vIjo3MzI4Njh9LCJwcmV2IjoiNTk5OTYyNGRlNjI1MjE2YTNjZWUzMTMwMmE3NjIyMGU0ZjliZDIwNmZkZTk1NWM1MDAxOTExZmQyOGFiNDA0MyIsInNlcW5vIjoxMCwidGFnIjoic2lnbmF0dXJlIn2jc2lnxEDj/ca24PxVfgMcay9wO8jeJ1bSMyLNXJQMxNW22Wy323jTsGOj7CPJ37Otd5M09Z9vIYG2GC7KUTBdHuhtbeoFqHNpZ190eXBlIKRoYXNogqR0eXBlCKV2YWx1ZcQgc4Q3AYF3PqPWeFjNUO/QiEBVPcuk5kZ8LlWQ+6RNvMejdGFnzQICp3ZlcnNpb24B
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/hatoishi
+
+==================================================================
