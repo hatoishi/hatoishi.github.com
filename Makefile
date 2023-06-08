@@ -1,4 +1,4 @@
-APP = hatoishi_app
+APP = blog_app
 
 .PHONY: all
 all: up

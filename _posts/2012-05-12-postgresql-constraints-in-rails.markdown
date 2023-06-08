@@ -137,8 +137,8 @@ class User < ActiveRecord::Base
 end
 ```
 
-We are specifying that a project must have a user_id, a case insensitve non null
-unique name and state must be in either an be 'active' or 'deleted'.  On
+We are specifying that a project must have a user_id, a case insensitive non
+null unique name and state must be in either an be 'active' or 'deleted'.  On
 Project.new.save! it will raise an ActiveRecord::RecordInvalid exception for
 all the validations. We are also setting the dependent option to cascade
 destruction of a user to the dependent projects.
@@ -390,4 +390,3 @@ Rails migrations[^1] and validations[^2]. PostgreSQL constraints[^3] and indexes
 [^2]: <http://guides.rubyonrails.org/active_record_validations_callbacks.html>
 [^3]: <http://www.postgresql.org/docs/9.1/static/ddl-constraints.html>
 [^4]: <http://www.postgresql.org/docs/9.1/static/indexes.html>
-

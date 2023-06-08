@@ -1,10 +1,10 @@
-title: Hatoishi 鳩石
+title: Blog
 logo: /images/site-logo.png
 locale: en-GB
 email: jon@doveston.me.uk
-description: Programming and more
+description: We got both kinds, Dev and Ops!
 baseurl: "/"
-url: "https://hatoishi.net"
+url: "https://jondoveston.github.io"
 date_format: "%B %-d, %Y"
 read_time: true
 words_per_minute: 200
@@ -13,9 +13,9 @@ google_analytics: UA-28013846-2
 disqus:
   shortname: # Disqus shortname, e.g. "my_disqus_shortname"
 twitter:
-  username: hatoishi
-twitter_username: hatoishi
-github_username:  hatoishi
+  username: jondoveston
+twitter_username: jondoveston
+github_username:  jondoveston
 
 google_fonts:
   - name: "Source Sans Pro"
@@ -67,28 +67,28 @@ author: false
   # name: Jon Doveston
   # picture: /images/jondoveston.png
   # email: jon@doveston.me.uk
-  # twitter: hatoishi
+  # twitter: jondoveston
   # links:
   #   - title: Twitter
-  #     url: https://twitter.com/hatoishi
+  #     url: https://twitter.com/jondoveston
   #     icon: fab fa-twitter-square
   #   - title: GitHub
-  #     url: https://github.com/hatoishi
+  #     url: https://github.com/jondoveston
   #     icon: fab fa-github-square
   #   - title: Keybase
-  #     url: https://keybase.io/hatoishi
+  #     url: https://keybase.io/jondoveston
   #     icon: fab fa-keybase
 
 # Footer Links
 footer_links:
   - title: Twitter
-    url: https://twitter.com/hatoishi
+    url: https://twitter.com/jondoveston
     icon: fab fa-twitter
   - title: GitHub
-    url: https://github.com/hatoishi
+    url: https://github.com/jondoveston
     icon: fab fa-github
   - title: Keybase
-    url: https://keybase.io/hatoishi
+    url: https://keybase.io/jondoveston
     icon: fab fa-keybase
 
 # Exclude from processing.

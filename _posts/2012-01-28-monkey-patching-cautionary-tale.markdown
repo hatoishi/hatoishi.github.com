@@ -55,7 +55,7 @@ isn't such a stupid idea, the accuracy of this method is entirely arbitrary and
 having it match the accuracy of the database makes sense. This monkey patching
 was written in the spec_helper and so was only used in the test environment. I
 really didn't anticipate any problem with this form of test wide 'accuracy
-stubbing', certainly none of my code was dependant on timing fractions of
+stubbing', certainly none of my code was dependent on timing fractions of
 seconds.
 
 ### A Capybara Ate My Homework
@@ -99,7 +99,7 @@ After that all time increments with Timecop are whole seconds and the Rspec
 equality matchers work with Time.now. An alternative would be to use the
 be_close Rspec matcher.
 
-### References 
+### References
 
 Check out the MongoDB docs on dates[^1] the strip_milliseconds method in mongoid
 time keeping[^2] and wait_until method in capybara[^3].
